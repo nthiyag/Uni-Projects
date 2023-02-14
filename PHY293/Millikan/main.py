@@ -38,11 +38,10 @@ for (number, sample) in samples.items():
     q2 = C * (v_t + v_2) * (v_t ** 0.5) / V_up
 
     r = 3*(eta*v_t/(2*g*(p_o-p_a)))**(1/2)
+    rs.append(r)
 
     Q1.append(q1)
     Q2.append(q2)
-
-    rs.append(r)
 
 print("Average drop size:", sum(rs)/len(rs))
 
