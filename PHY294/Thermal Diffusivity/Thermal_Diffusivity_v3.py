@@ -72,8 +72,8 @@ def find_sinusoid_phaseshifts(data):
         chi_squares[col] = sum([((inside[i] - sinusoid_approx(time[i], phaseshift, 50, 50, 0, col)) ** 2) / (y_unc ** 2) for i in range(len(time))]) / (len(time) - 1)
 
         data[col]["residuals"] = [inside[i] - sin_in_data[i] for i in range(len(time))] + ([None for i in range(len(list(data[col].index))-len(time))])
-        #data[col]["sin_approx_inside"] = sin_in_data
-        #data[col]["over_sin_approx_inside"] = over_sin_in_data
+        data[col]["sin_approx_inside"] = sin_in_data
+        data[col]["over_sin_approx_inside"] = over_sin_in_data
 
     return data, phaseshifts, errors, chi_squares
 
@@ -83,8 +83,8 @@ def sinusoid_approx(t, x_shift, y_shift, y_scale, a1, col):
 def visualize(data):
     for col in data:
         plt.figure()
-        plt.plot(data[col]["residuals"])
-        plt.title("Temp. vs. Time (sinusoidal fit residuals) | Period: " + str(int(col) * 20) + "s")
+        plt.plot(data[col][["inside", "outside", "sin_approx_inside", "over_sin_approx_inside"]])
+        plt.title("Temp. vs. Time (with sinusoidal overfit) | Period: " + str(int(col) * 20) + "s")
         plt.xlabel("Time (s)")
         plt.ylabel("Temperature (°C)")
     plt.show()
